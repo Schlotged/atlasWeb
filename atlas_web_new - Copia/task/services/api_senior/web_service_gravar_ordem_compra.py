@@ -3,6 +3,11 @@ from zeep import Client, Transport
 from zeep.plugins import HistoryPlugin
 from zeep.exceptions import Fault
 from requests import Session
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 def ws_senior_ordem_compra(data:dict):
 
@@ -20,8 +25,8 @@ def ws_senior_ordem_compra(data:dict):
     client = Client(wsdl=wsdl_url, transport=transport, plugins=[history])
 
     # Credenciais de acesso
-    usuario = "gedson.silva"
-    senha = "Ttl@#2141g"
+    usuario = os.getenv('USER_SENIOR')
+    senha = os.getenv('PASSWORD_SENIOR')
     
     codEmp = data.get("codigo-empresa", "codigo-empresa nao localizado")
     codFil = data.get("codigo-filial", "codigo-filial nao localizado")

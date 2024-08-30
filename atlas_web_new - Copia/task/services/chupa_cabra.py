@@ -97,8 +97,8 @@ class chupaCabra:
 
         client = Client(wsdl=wsdl_url, transport=transport, plugins=[history])
 
-        usuario = "gedson.silva"
-        senha = "Ttl@#2141g"
+        usuario = os.getenv('USER_SENIOR')
+        senha = os.getenv('PASSWORD_SENIOR')
 
         try:
             response = client.service.Exportar(

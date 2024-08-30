@@ -1,5 +1,9 @@
 from zeep import Client
 from zeep.exceptions import Fault
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # URL do WSDL
 wsdl_url = "https://webp07.seniorcloud.com.br:30511/g5-senior-services/sapiens_Synccom_senior_g5_co_mcm_cpr_ordemcompra?wsdl"
@@ -8,8 +12,8 @@ wsdl_url = "https://webp07.seniorcloud.com.br:30511/g5-senior-services/sapiens_S
 client = Client(wsdl=wsdl_url)
 
 # Credenciais
-usuario = "gedson.silva"
-senha = "Ttl@#2141g"
+usuario = os.getenv('USER_SENIOR')
+senha = os.getenv('PASSWORD_SENIOR')
 
 # Parâmetros ajustados
 try:

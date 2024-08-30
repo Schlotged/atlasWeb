@@ -3,7 +3,10 @@ from zeep import Client, Transport
 from zeep.plugins import HistoryPlugin
 from zeep.exceptions import Fault
 from requests import Session
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 # def web_service_get_prestadores(codfor):
 
 #     # logging.basicConfig(level=logging.INFO)
@@ -59,8 +62,8 @@ def web_service_post_prestadores(data:dict, code_forn:int):
 
     client = Client(wsdl=wsdl_url, transport=transport, plugins=[history])
 
-    usuario = "gedson.silva"
-    senha = "Ttl@#2141g"
+    usuario = os.getenv('USER_SENIOR')
+    senha = os.getenv('PASSWORD_SENIOR')
 
     nome = data.get('nomePrestador', '')
     razaoSocial = data.get('razaoSocial', '')
