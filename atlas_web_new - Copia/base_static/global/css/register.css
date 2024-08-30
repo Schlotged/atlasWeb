@@ -1,0 +1,23 @@
+.btn {
+    display: inline-block; /* Faz o link se comportar como um botão */
+    padding: 0.5em 1em; /* Espaçamento interno do botão */
+    font-size: 1em; /* Tamanho da fonte */
+    font-weight: bold; /* Fonte em negrito */
+    color: #fff; /* Cor do texto */
+    background-color: #007bff; /* Cor de fundo do botão */
+    border: none; /* Remove a borda padrão */
+    border-radius: 4px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+    text-decoration: none; /* Remove o sublinhado do link */
+    cursor: pointer; /* Mostra um cursor de mão quando passa sobre o botão */
+    transition: background-color 0.3s ease; /* Transição suave para cor de fundo */
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+.btn:focus {
+    outline: none; /* Remove a borda de foco padrão */
+    box-shadow: 0 0 0 3px rgba(38, 143, 255, 0.5); /* Adiciona uma sombra de foco */
+}

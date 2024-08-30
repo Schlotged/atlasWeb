@@ -1,0 +1,46 @@
+.cep-div{
+    padding: 10px;
+    border: 1px solid #8f8f8f5c;
+    border-radius: 10px;
+
+}
+
+.form-column{
+    margin: 10px;
+    background: #FFFFFF url(https://sistema.soc.com.br/estatico/webcontext/imagens/barra_bg2.png) repeat-x left bottom;
+}
+
+label{
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.cep-table{
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+}
+
+.form-section::before {
+    content: attr(data-title);
+    position: absolute;
+    top: -11px; /* Ajuste conforme necessário */
+    left: 20px; /* Ajuste conforme necessário */
+    background: #fff;
+    padding: 0 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: #8F8F8F;
+}
+
+.form-section {
+    position: relative;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}

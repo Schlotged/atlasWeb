@@ -1,0 +1,418 @@
+{% extends 'global/base.html' %} 
+
+{% load static %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+
+
+
+    <h2>Formulário Ordem de Compra</h2>
+    <form action="{% url 'task:senior-ordem-compra' %}" method="post" id="ordemCompraForm">
+
+        {% csrf_token %}
+
+        <div class="form-column cep-div">
+
+            <div class="form-group" style="width: 48%;">
+                <label>Empresa</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="codigo-empresa">
+                        <option selected></option>
+                        <option value="10">MATRIZ</option>
+                        <option value="20">FILIAL</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Filial</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="codigo-filial">
+                        <option selected></option>
+                        <option value="1001">TOTAL LIFE SC</option>
+                        <option value="1003">TOTAL LIFE RS</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group col-md-3" style="width: 48%;">
+                <label>CNPJ do prestador</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="cnpj-prestador" id="cnpj-input" maxlength="18" placeholder="00.000.000/0000-00" oninput="mascaraCNPJ(this)" />
+                    <div class="input-group-append" style="margin-left: 8px;">
+                        <button type="button" class="btn btn-primary" id="buscar-prestador-btn" name="cnpj-prestador">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-group col-md-4" style="width: 48%;">
+                <label>Prestador</label>
+                <input type="text" name="nome-prestador" class="form-control" id="prestador-input" value=""/>
+            </div>
+
+            <div class="form-group col-md-3" style="width: 48%;">
+                <label>CNPJ do Cliente</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="cnpj-cliente" spellcheck="false" data-ms-editor="true" id="cnpj-input-cliente" maxlength="18" placeholder="00.000.000/0000-00" oninput="mascaraCNPJ(this)"/>
+                    <div class="input-group-append" style="margin-left: 8px;">
+                        <button type="button" class="btn btn-primary" id="buscar-cliente-btn" name="cnpj-cliente">Buscar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group col-md-4" style="width: 48%;">
+                <label>Cliente</label>
+                <input type="text" name="input-cliente" class="form-control" id="cliente-input" value=""/>
+            </div>
+
+            <div class="form-group col-md-5" style="width: 48%;">
+                <label >Conta Financeira</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="conta-financeira">
+                        <option selected></option>
+                        <option value="4">Lev. Progs/TST</option>
+                        <option value="64">Lev. Progs/Alimentação - TST</option>
+                        <option value="32">Lev. Progs/Hospedagem - TST</option>
+                        <option value="41">Lev. Progs/Desloc. Terreste  - TST</option>
+                        <option value="43">Lev. Progs/Desloc. Metropole FLN - TST</option>
+                        <option value="43">Lev. Progs/Desloc. Metropole XAP/POA - TST</option>
+                        <option value="34">Lev. Progs/Desloc. Rodoviário  - TST</option>
+                        <option value="101">Lev. Progs/Desloc. Aéreo - TST</option>
+                        <option value="43">Lev. Progs/Desloc. Aluguel de Carro/Uber  - TST</option>
+                        <option value="4">Lev. Progs/Desloc. Hora  - TST</option>
+                        <option value="43">Lev. Progs/Pedágio - TST</option>
+                        <option value="20">Lev. Progs/Prestador Sub Contratado - TST</option>
+                        <option value="4">Elaboração Programas - TST</option>
+                        <option value="4">Revisão Programas - Engenheiro</option>
+                        <option value="4">Revisão PCMSO - Médico</option>
+                        <option value="4">AET</option>
+                        <option value="4">Medição Quantitativos</option>
+                        <option value="1">E-Social</option>
+                        <option value="17">SOC</option>
+                        <option value="1">Agendamento</option>
+                        <option value="21">Prestador - Rede Credenciada (R$)</option>
+                        <option value="26">Atendimento - Clínica TL</option>
+                        <option value="28">Atendimento U.M</option>
+                        <option value="38">ART - Anotação de Responsabilidade Tec.</option>
+                        <option value="1">Treinamento de Implantação e do E-Social</option>
+                        <option value="61">Comissão (R$)</option>
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group col-md-5" style="width: 48%;">
+                <label>Condição de Pagamento</label>
+                <select class="form-select" aria-label="Default select example" name="condicao_pagamento">
+                    <option selected></option>
+                    <option value="03">03</option>
+                    
+
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Código Usuário</label>
+                <input type="number" class="form-control" name="codigo-usuario" id="codigo-usuario">
+            </div>
+
+        </div>
+
+        <section class="form-column cep-div" id="select-container">
+            <table class="table" id="product-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Valor unitário</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Valor Total</th>
+                        <th scope="col">Un do Produto</th>
+                        <th scope="col">Familia Produto</th>
+                        <th scope="col">Depósito para estoque</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body">
+                    <tr>
+                        <td>
+                            <div class="form-group col-md-12">
+                                <select class="form-select" aria-label="Default select example" id="product-select" name="produto_senior">
+                                    <option selected></option>
+                                    <option value="862">COFINS</option>
+                                    <option value="865">DAS</option>
+                                    <option value="864">ISS</option>
+                                    <option value="863">PIS/PASEP</option>
+                                    <option value="815">ADIANTAMENTO DE HOSPEDAGEM - FROTA</option>
+                                    <option value="817">ADIANTAMENTO DE VIAGEM - FROTA</option>
+                                    <option value="803">ADIANTAMENTO P/ PRESTADOR</option>
+                                    <option value="831">AGUA</option>
+                                    <option value="847">ALIMENTAÇÃO/REFEIÇÃO - VIAGENS - ADM</option>
+                                    <option value="855">ALUGUÉIS DE MÁQ. E EQUIPAMENTOS</option>
+                                    <option value="830">ALUGUÉIS E CONDOMÍNIOS</option>
+                                    <option value="858">AMORTIZAÇÃO DE EMPRÉSTIMOS (Capital de Giro)</option>
+                                    <option value="834">AMORTIZAÇÃO DE EMPRÉSTIMOS (Rotativo)</option>
+                                    <option value="882">APLICAÇÃO FINANCEIRA</option>
+                                    <option value="879">APORTE MIHMO</option>
+                                    <option value="871">APORTE PERICIAL SUL</option>
+                                    <option value="841">ASSESSORIA CONTÁBIL</option>
+                                    <option value="836">ASSOCIAÇÕES DE CLASSE</option>
+                                    <option value="821">BENS DE PEQUENO VALOR</option>
+                                    <option value="789">BOLSA AUXILIO ESTAGIÁRIO</option>
+                                    <option value="857">CARTÃO EMPRESARIAL</option>
+                                    <option value="837">CARTÓRIOS E DESPESAS LEGAIS</option>
+                                    <option value="825">COMBUSTÍVEL</option>
+                                    <option value="844">COMISSÕES</option>
+                                    <option value="842">CONSULTORIA/TREINAMENTOS</option>
+                                    <option value="866">CSLL</option>
+                                    <option value="799">CURSOS/PALESTRAS</option>
+                                    <option value="787">DECIMO TERCEIRO SALARIO</option>
+                                    <option value="809">DESENVOLVIMENTO E MELHORIAS DE SISTEMA</option>
+                                    <option value="870">DESENVOLVIMENTO E MELHORIAS DE SISTEMA - MIHMO</option>
+                                    <option value="816">DESPESA COM HOSPEDAGEM - FROTA</option>
+                                    <option value="869">DESPESA DE VIAGENS - ADM</option>
+                                    <option value="791">DESPESAS PF</option>
+                                    <option value="861">DEVOLUÇÃO DE APORTE</option>
+                                    <option value="860">DEVOLUÇÃO DE CLIENTES</option>
+                                    <option value="832">ENERGIA ELÉTRICA</option>
+                                    <option value="826">ESTACIONAMENTO - FROTA</option>
+                                    <option value="786">FÉRIAS</option>
+                                    <option value="795">FGTS</option>
+                                    <option value="839">FRETES</option>
+                                    <option value="843">HONORÁRIOS ADVOCATÍCIOS</option>
+                                    <option value="859">IMOBILIZADO</option>
+                                    <option value="823">IMPOSTOS (IPVA/DPVAT/LICENCIAMENTO)</option>
+                                    <option value="889">INFORMÁTICA - SERVIÇOS TERCEIROS</option>
+                                    <option value="890">INFORMÁTICA - SERVIÇOS TERCEIROS - PRODUTO</option>
+                                    <option value="794">INSS</option>
+                                    <option value="793">IR SOBRE FOLHA</option>
+                                    <option value="867">IRPJ</option>
+                                    <option value="853">JUROS PAGOS/ENCARGOS FINANCEIRO</option>
+                                    <option value="478">Levantamento Técnico p/regularização de Pro. Aprovado CNPJ</option>
+                                    <option value="804">LEVANTAMENTO TÉCNICOS - ENG.</option>
+                                    <option value="854">MANUTENÇÃO DA CONTA</option>
+                                    <option value="824">MANUTENÇÃO/TRANSFORMAÇÃO - VEÍCULOS</option>
+                                    <option value="886">MANUTENÇÃO/TRANSFORMAÇÃO - VEÍCULOS / CORRETIVA</option>
+                                    <option value="887">MANUTENÇÃO/TRANSFORMAÇÃO - VEÍCULOS / CORRETIVA - PRODUTO</option>
+                                    <option value="885">MANUTENÇÃO/TRANSFORMAÇÃO - VEÍCULOS / PREVENTIVO</option>
+                                    <option value="820">MARKETING - MATERIAL GRÁFICO E OUTROS</option>
+                                    <option value="884">MARKETING - MATERIAL GRÁFICO E OUTROS - PRODUTO</option>
+                                    <option value="845">MATERIAL DE COPA/COZINHA/LIMPEZA</option>
+                                    <option value="846">MATERIAL DE EXPEDIENTE</option>
+                                    <option value="873">MATERIAL PARA USO/CONSUMO DA CLINICA</option>
+                                    <option value="527">MATERIAS PARA OBRA</option>
+                                    <option value="796">MÉDICA/ODONTOLÓGICA</option>
+                                    <option value="811">MÉDICO(A) ALOCADOS EM CHAPECÓ</option>
+                                    <option value="812">MÉDICO(A) ALOCADOS NA UM / CLIENTES</option>
+                                    <option value="810">MÉDICOS E OUTROS PROF. DAS CLÍNICAS</option>
+                                    <option value="802">MENSALIDADE/INSCRIÇÕES EM PORTAL DE COMPRAS</option>
+                                    <option value="801">MENSALIDADE/MANUTENÇÃO DOS SISTEMAS - SOC/AGILE E OUTROS</option>
+                                    <option value="848">MULTAS</option>
+                                    <option value="828">MULTAS - VEÍCULOS</option>
+                                    <option value="827">OUTRAS DESPESAS - VEÍCULOS</option>
+                                    <option value="888">OUTRAS DESPESAS - VEÍCULOS - PRODUTO</option>
+                                    <option value="800">OUTROS BENEFÍCIOS P/ FUNCIONÁRIOS</option>
+                                    <option value="806">OUTROS PRESTADORES PF</option>
+                                    <option value="696">PALESTRA</option>
+                                    <option value="856">PARCELAMENTO SIMPLES NACIONAL</option>
+                                    <option value="818">PASSAGENS - FROTA</option>
+                                    <option value="574">PLANO DE SEGURANÇA</option>
+                                    <option value="101">PRESTAÇÃO UM1</option>
+                                    <option value="805">PRESTADORES</option>
+                                    <option value="875">PRÓ-LABORE</option>
+                                    <option value="876">PROCESSOS JUDICIAIS</option>
+                                    <option value="819">PROCESSOS TRABALHISTA</option>
+                                    <option value="878">QUOTAS AQUISIÇÃO AIROLDI</option>
+                                    <option value="880">QUOTAS AQUISIÇÃO MIHMO</option>
+                                    <option value="807">RECIBO/RPA/PAG. DE UNIDADE MÓVEL</option>
+                                    <option value="813">REEMBOLSO/DESPESAS DE VIAGEM - ADM</option>
+                                    <option value="814">REEMBOLSO/DESPESAS DE VIAGEM - FROTA</option>
+                                    <option value="877">REFORMAS CLINICA</option>
+                                    <option value="894">REFORMAS CLINICA - PRODUTO</option>
+                                    <option value="868">REFORMAS PORTO ALEGRE</option>
+                                    <option value="892">REFORMAS PORTO ALEGRE - PRODUTO</option>
+                                    <option value="881">REPARO / MANUTENÇÃO EQUIP.</option>
+                                    <option value="895">REPARO / MANUTENÇÃO EQUIP. - P</option>
+                                    <option value="896">REPARO / MANUTENÇÃO EQUIP. - PRODUTO</option>
+                                    <option value="790">RESCISÃO DE TRABALHISTA</option>
+                                    <option value="792">RETIRADAS SÓCIOS</option>
+                                    <option value="808">RT - MÉDICO(a)</option>
+                                    <option value="785">SALÁRIOS</option>
+                                    <option value="883">SAQUE DA CONTA</option>
+                                    <option value="838">SEGURANÇA</option>
+                                    <option value="829">SEGURO - VEÍCULOS</option>
+                                    <option value="835">SEGUROS</option>
+                                    <option value="788">SERVIÇOS DE PJ</option>
+                                    <option value="852">TARIFAS</option>
+                                    <option value="822">TAXA DE ART. - ENGENHARIA</option>
+                                    <option value="851">TAXAS ESTADUAIS</option>
+                                    <option value="849">TAXAS FEDERAIS</option>
+                                    <option value="850">TAXAS MUNICIPAIS</option>
+                                    <option value="833">TELEFONE / INTERNET</option>
+                                    <option value="872">TRANSFERENCIA ENTRE CONTAS DA MESMA EMPRESA</option>
+                                    <option value="874">UNIDADE DE SÃO JOSÉ-SC</option>
+                                    <option value="893">UNIDADE DE SÃO JOSÉ-SC - PRODUTO</option>
+                                    <option value="840">UNIFORME / EPI / EPC</option>
+                                    <option value="798">VALE ALIMENTAÇÃO/REFEIÇÃO</option>
+                                    <option value="797">VALE TRANSPORTE</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 120px;">
+                                <input type="text" class="form-control" placeholder="0,00" oninput="mascaraMoeda(this)" name="valor_unitario"/>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 120px;">
+                                <input type="number" class="form-control" placeholder="Quantidade" name="quantidade-produto"/>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 120px;">
+                                <input type="text" class="form-control" placeholder="Valor Total" oninput="mascaraMoeda(this)" name="valor-total-produto"/>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 120px;">
+                                <select class="form-select" name="unidade_produto" aria-label="Default select example" id="unidade-produto">
+                                    <option value="" selected></option>
+                                    <option value="UN">UN</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" >
+                                <select class="form-select" aria-label="Default select example" id="familia-produto-select" name="cod_familia_produto">
+                                    <option selected></option>
+                                    <option value="03">03</option>
+                                </select>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 120px;">
+                                <input type="number" class="form-control" name="Cod_deposito_produto_estoque" id="product-deposito">
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="form-group" style="width: 8%;">
+                                <div class="input-group">
+                                    <div class="input-group-append" style="margin-left: 8px;">
+                                        <button type="button" style="width: 60px;" class="btn btn-primary btn-sm" id="add-select-btn">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+
+        <section class="form-column cep-div">
+
+            <div class="form-group" style="width: 20%;">
+                <label>Data de Emissão</label>
+                <input type="date" class="form-control" id="datEmi" name="data-emissao"/>
+            </div>
+
+            <div class="form-group" style="width: 20%;">
+                <label>Data do Pagamento</label>
+                <input type="date" id="datPag" class="form-control" name="data-pagamento"/>
+            </div>
+
+            <div class="form-group" style="width: 14%;">
+                <label>Código do projeto</label>
+                <input type="number" class="form-control" name="numero-projeto" id="numero-projeto">
+            </div>
+
+            <div class="form-group" style="width: 14%;">
+                <label>Código da fase do projeto</label>
+                <input type="number" class="form-control" name="codigo-fase-projeto" id="codigo-fase-projeto">
+            </div>
+
+            <div class="form-group" style="width: 14%;">
+                <label>Conta Contábil</label>
+                <input type="number" class="form-control" name="codigo_conta_contabil" id="codigo-conta-contabil">
+            </div>
+
+            <div class="form-group" style="width: 14%;">
+                <label>Código Centro de Custo</label>
+                <input type="text" class="form-control" name="codigo-centro-custo" id="codigo-centro-custo">
+            </div>
+
+            <div class="form-group" style="width: 50%;">
+                <label>Observações</label>
+                <textarea class="form-control" id="obsOc" name="observacao-ordem-compra"></textarea>
+            </div>
+
+        </section>
+
+        <div class="form-group" style="padding-top: 1rem;">
+            <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+        </div>
+        
+    </form>
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: transparent; border: none;">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="optionsModal" tabindex="-1" role="dialog" aria-labelledby="optionsModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document"> <!-- Classe modal-lg para largura grande -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionsModalLabel">Escolha qual é a sua opção</h5>
+
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Código</th>
+                                <th scope="col">CNPJ</th>
+                                <th scope="col">Selecionar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="optionsModalBody">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <link rel="stylesheet" href="{% static 'css/form_prestador.css' %}">
+
+    <script>
+        var buscarPrestadorUrl = "{% url 'task:buscar-prestador' %}";
+        var buscarClienteUrl = "{% url 'task:buscar-cliente' %}";
+        var sendOrdemCompra = "{% url 'task:senior-ordem-compra' %}";
+        var windowOrdemCompra = "{% url 'task:senior' %}";
+        var csrfToken = "{{ csrf_token }}";
+    </script>
+
+
+{% endblock %}

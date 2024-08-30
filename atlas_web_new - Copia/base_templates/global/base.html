@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+
+    {% include 'partials/_head.html' %}
+    
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-nav">
+            <div class="navdiv">
+
+                <a href="{% url 'task:home' %}" class="navbar-brand">
+                    <img class="logo" src="{% static 'global/assets/logo_3.png' %}" alt="">
+                </a>
+
+            </div>
+        </nav>
+    </header>
+
+    <aside class="sidebar">
+        <ul class="nav flex-column">
+
+            <!-- <li class="nav-item">
+                <a class="nav-link {% if request.path == '/dashboard/' %}active{% endif %}" href="{% url 'task:dashboard' %}"> <i class='bx bx-line-chart'></i> Dashboard</a>
+            </li> -->
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/agendamento/' %}active{% endif %}" href="{% url 'task:agendamento' %}">
+                    <i class='bx bx-band-aid'></i>
+                    <span>Agendamento</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <div class="dropdown-container">
+                    <a class="nav-link {% if request.path == '/robos/' %}active{% endif %}" href="#" data-bs-toggle="collapse" data-bs-target="#senior-collapse" aria-expanded="false"> 
+                        <img class="senior-icon" src="{% static 'global/assets/senior_icon-bg.ico' %}" alt="logo senior">
+                        <span>Sênior</span>
+                    </a>
+                    <div class="collapse" id="senior-collapse">
+                        <ul class="list-unstyled ps-0 btn-toggle-nav">
+                            <li><a href="{% url 'task:senior' %}"><i class='bx bx-cart'></i> Ordem de compra</a></li>
+                            <li><a href="{% url 'task:senior' %}"><i class='bx bx-cart'></i> Projeto</a></li>
+                            <li><a href="{% url 'task:prestador' %}"><i class='bx bx-cart'></i> Prestador</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if request.path == '/sair/' %}active{% endif %}" href="{% url 'logout' %}"> <i class='bx bx-exit' ></i> Sair</a>
+            </li>
+        </ul>
+
+    </aside>
+
+    <main>
+        <div class="content">
+
+            {% block header %}
+                <h1>Home</h1>
+            {% endblock header %}
+
+            {% block content %}
+
+            {% endblock content %}
+
+            <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-top-right" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success</h5>
+                        </div>
+                        <div class="modal-body">
+                        Operação concluída com sucesso!
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <link rel="stylesheet" href="{% static 'global/css/form_senior.css' %}">
+        
+
+    </main>
+    
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/senior_js.js' %}"></script>
+    <script src="{% static 'js/prestador_js.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+</html>

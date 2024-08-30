@@ -1,0 +1,430 @@
+{% extends 'global/base.html' %} 
+
+{% load static %}
+
+{% block header %}{% endblock header %}
+
+{% block content %}
+
+
+    <link rel="stylesheet" href="{% static 'css/form_prestador.css' %}">
+    
+    <h2 style="margin-bottom: 20px;">Formulário Prestador</h2>
+
+    <form action="{% url 'task:soc-senior-prestador' %}" method="post" id="prestadorSocSenior">
+
+        {% csrf_token %}
+
+        <div class="form-column cep-div form-section" id="user-table" style="margin-top: 30px;" data-title="Dado do Login">
+
+            <div class="form-group" style="width: 48%;">
+                <label>Usuário SOC</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="usuario-soc" id="usuario-input" spellcheck="false"/>
+                    <div class="input-group-append" style="margin-left: 8px;">
+                        <button type="button" class="btn btn-primary" id="buscar-usuario-btn" name="usuario">Buscar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="form-column cep-div form-section"  style="margin-top: 30px;" data-title="Dados de Cadastro">
+
+            <div class="form-group" style="width: 48%;">
+                <label>Nome Prestador</label>
+                <input type="text" class="form-control" id="datEmi" name="nomePrestador"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+
+                <label>CNPJ/CPF</label>
+                <input type="text" class="form-control" id="cpf" maxlength="18" name="cpf"/>
+                <span id="documentoErro" style="color:red; display:none;">Documento inválido!</span>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Razão Social</label>
+                <input type="text" id="datPag" class="form-control" name="razaoSocial"/>
+            </div>
+
+            <div class="form-group col-md-5" style="width: 48%;">
+                <label>Tipo Prestador</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="tipo-prestador">
+                        <option selected></option>
+                        <option value="SAUDE">SAUDE</option>
+                        <option value="SEGURANCA">SEGURANCA</option>
+                        <option value="AMBOS">AMBOS</option>
+                    </select>
+                </div>
+            </div>
+                
+            <div class="form-group col-md-5" style="width: 48%;">
+                <label>Tipo Pessoa</label>
+                <select class="form-select" aria-label="Default select example" id="tipoPessoa" name="tipo-pessoa">
+                    <option selected></option>
+                    <option value="JURIDICA">JURIDICA</option>
+                    <option value="FISICA">FISICA</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Responsavel</label>
+                <input type="text" class="form-control" placeholder="Responsavel" name="responsavel"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>UF</label>
+                <select class="form-select" aria-label="Default select example" name="uf">
+                    <option selected></option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AM">AM</option>
+                    <option value="AP">AP</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MG">MG</option>
+                    <option value="MS">MS</option>
+                    <option value="MT">MT</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="PR">PR</option>
+                    <option value="RJ">RJ</option>
+                    <option value="RN">RN</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="RS">RS</option>
+                    <option value="SC">SC</option>
+                    <option value="SE">SE</option>
+                    <option value="SP">SP</option>
+                    <option value="TO">TO</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Aviso Sobre Prestador</label>
+                <input type="text" class="form-control" id="avisoSobrePrestador" name="avisoSobrePrestador"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Representante Legal</label>
+                <input type="text" class="form-control" id="representanteLegal" name="representanteLegal"/>
+            </div>
+
+            <div class="form-group " style="width: 48%;">
+                <label>Ativo</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="prestadorAtivo">
+                        <option selected></option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+
+                    </select>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="form-column cep-div form-section" id="cep-table" style="margin-top: 30px;" data-title="Dados de Endereço">
+            
+            <div class="form-group col-md-6"  style="width: 48%; ">
+                <label>Cep</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="cepPrest" name="cep" maxlength="8"/>
+                    <div class="input-group-append" style="margin-left: 8px;">
+                        <button type="button" class="btn btn-primary" id="buscar-cep" name="buscar-cep">Buscar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Telefone</label>
+                <input type="text" class="form-control" id="telefone-prestador" name="telefonePrestador"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Email</label>
+                <input type="email" class="form-control" id="email-prestador" name="emailPrestador" maxlength="200"/>
+            </div>
+
+        </section>
+
+        <section class="form-column cep-div form-section" style="margin-top: 30px;" data-title="Dados de Funcionamento">
+
+            <div class="form-group" style="width: 48%;">
+                <label>Hora Inicial Atendimento</label>
+                <input type="time" class="form-control" id="horaInicialAtendimento" name="horaInicialAtendimento" maxlength="7"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Hora Final Atendimento</label>
+                <input type="time" class="form-control" id="horaFinalAtendimento" name="horaFinalAtendimento"  maxlength="7"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Tipo Atendimento</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="tipoAtendimento">
+                        <option selected></option>
+                        <option value="HORA_MARCADA">HORA MARCADA</option>
+                        <option value="ORDEM_CHEGADA">ORDEM CHEGADA</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Pagamento Antecipado</label>
+                <div class="form-group">
+                    <select class="form-select" aria-label="Default select example" name="pagamentoAntecipado">
+                        <option selected></option>
+                        <option value="N">NÃO</option>
+                        <option value="S">SIM</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Comentario</label>
+                <div class="form-group">
+                    <textarea class="form-control" name="comentarioPrestador" id="comentarioPrestador"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Observação Geral</label>
+                <div class="form-group">
+                    <textarea class="form-control" name="observacao-geral" id="observacao-geral"></textarea>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="form-column cep-div form-section" style="margin-top: 30px;" data-title="Dados de faturamento">
+
+            <div class="form-group" style="width: 48%;">
+                <label>Dia Do Pagamento</label>
+                <select name="diaDoPagamento" class="form-select" aria-label="Default select example">
+                    <option value=""></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Condição de pagamento Senior</label>
+                <select name="condicaoPagamento" class="form-select" aria-label="Default select example">
+                    <option value=""></option>
+                    <option value="03">3</option>
+                    <option value="05">5</option>
+                    <option value="07">7</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="60">60</option>
+                    <option value="90">90</option>
+                    <option value="AV">A vista</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Condicao Faturamento</label>
+                <select name="codigoCondicaoFaturamento" class="form-select" aria-label="Default select example">
+                    <option value="0"></option>
+                    <option value="17">10 dias após o atendimento</option>
+                    <option value="2">18 do mês seguinte ao receber </option>
+                    <option value="14">18 mês sequente recebimento</option>
+                    <option value="12">25 sequente do atendimento</option>
+                    <option value="5">30 do mês seguinte ao atender</option>
+                    <option value="15">30 do mês sequente recebimento</option>
+                    <option value="16">30 mês sequente ao atendimento</option>
+                    <option value="19">Clinica Total Life</option>
+                    <option value="11">Pagamento Antecipado</option>
+                    <option value="10">Pagamento dia 01 do mês subsequente</option>
+                    <option value="6">Pagamento dia 05 do mês subsequente.</option>
+                    <option value="8">Pagamento dia 10 do mês subsequente</option>
+                    <option value="7">Pagamento dia 15 do mês subsequente</option>
+                    <option value="9">Pagamento dia 20 do mês subsequente</option>
+                    <option value="13">Pagamento Diferenciado (Ver Observação)</option>
+                    <option value="4">Teste Suporte III</option>
+                    <option value="18">Unidade Móvel</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Tipo Pagamento</label>
+                <select name="tipoPagamento" class="form-select" aria-label="Default select example">
+                    <option value=""></option>
+                    <option value="DEPOSITO">Depósito</option>
+                    <option value="BOLETO">Boleto</option>
+
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>dataPagamento</label>
+                <input type="text" class="form-control" id="dataPagamento" name="dataPagamento"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Tipo Documento</label>
+                <select name="tipoDocumento" class="form-select" aria-label="Default select example">
+                    <option value=""></option>
+                    <option value="NOTA_FISCAL">NOTA FISCAL</option>
+                    <option value="RPA">RPA</option>
+                    <option value="FATURA">FATURA</option>
+                    <option value="RECIBO">RECIBO</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Data Contratacao</label>
+                <input type="text" class="form-control" id="dataContratacao" name="dataContratacao"/>
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+                <label>Status Contrato</label>
+                <select class="form-select" aria-label="Default select example" id="statusContrato" name="statusContrato">
+                    <option selected></option>
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+
+                </select>
+            </div>
+
+        </section>
+
+        <section class="form-column cep-div form-section" style="margin-top: 30px;" data-title="Dados Bancarios">
+            <div class="form-group" style="width: 48%;">
+
+                <label>Titular da Conta</label>
+                <input type="text" class="form-control" id="titularConta" name="titularConta"/>
+
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+
+                <label>Código Banco</label>
+                <input type="text" class="form-control input-number" id="codigoBanco" name="codigoBanco"/>
+
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+
+                <label>Código Agência</label>
+                <input type="text" class="form-control input-number" id="codigoAgencia" name="codigoAgencia"/>
+
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+
+                <label>Banco</label>
+                <input type="text" class="form-control" id="banco" name="banco"/>
+
+            </div>
+
+            <div class="form-group" style="width: 48%;">
+
+                <label>Conta Corrente</label>
+                <input type="text" class="form-control" id="contaCorrente" name="contaCorrente"/>
+
+            </div>
+
+        </section>
+
+
+        <div class="form-group" style="padding-top: 1rem; margin-top: 30px;">
+            <button type="submit" class="btn btn-primary btn-lg">Salvar</button>
+        </div>
+        
+    </form>
+
+    <div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content" style="background-color: transparent; border: none;">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="optionsModal" tabindex="-1" role="dialog" aria-labelledby="optionsModalLabel" aria-hidden="true" >
+        <div class="modal-dialog modal-lg" role="document"> <!-- Classe modal-lg para largura grande -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="optionsModalLabel">Escolha qual é a sua opção</h5>
+
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Código</th>
+                                <th scope="col">CNPJ</th>
+                                <th scope="col">Selecionar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="optionsModalBody">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script>
+        var buscarCep = "{% url 'task:buscar_cep' %}";
+        var sendPrestador = "{% url 'task:soc-senior-prestador' %}";
+        var sendBuscaUsuario = "{% url 'task:buscar_user_soc' %}";
+        var windowPrestador = "{% url 'task:prestador' %}";
+        var csrfToken = "{{ csrf_token }}";
+    </script>
+
+    
+    
+{% endblock %}

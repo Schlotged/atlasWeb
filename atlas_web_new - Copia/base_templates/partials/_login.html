@@ -1,0 +1,33 @@
+{% extends 'global/base_login.html' %} 
+
+{% load static %}
+
+{% block content %}
+
+    <div class="login-container">
+        <img class="logo" src="{% static 'global/assets/logo.png' %}" alt="">
+        <h2>Login</h2>
+        <form method="post" id="login-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_username">Username:</label>
+                <input type="text" name="username" id="id_username" required>
+                <span class="error-message" id="username-error"></span>
+            </div>
+            <div class="form-group">
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" required>
+                <span class="error-message" id="password-error"></span>
+            </div>
+            <button class="btn" type="submit">Login</button>
+
+            <a class="btn" href="{% url 'register' %}">Registre-se aqui</a>
+        </form>
+
+        {% if form.errors %}
+            <p class="error-text">Usuário ou senha inválidos. Tente novamente.</p>
+        {% endif %}
+    </div>
+
+    <script src="{% static 'global/js/login.js' %}"></script>
+{% endblock content %}

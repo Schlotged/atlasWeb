@@ -1,0 +1,30 @@
+/* Tela de carregamento (overlay) */
+.loading-overlay {
+    position: fixed; /* Usar fixed para cobrir toda a tela */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; /* Adiciona o bottom para cobrir toda a altura */
+    background-color: rgba(0, 112, 192, 0.5); /* Cor azul com transparência */
+    display: flex; /* Usar flex para centralizar o spinner */
+    justify-content: center;
+    align-items: center;
+    z-index: 999; /* Garante que a tela de carregamento esteja acima de tudo */
+    /* Remove o margin-left, pois é desnecessário para a sobreposição */
+}
+
+/* Spinner */
+.loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 4px solid white;
+    width: 40px; /* Aumenta o tamanho do spinner para visibilidade */
+    height: 40px; /* Aumenta o tamanho do spinner para visibilidade */
+    animation: spin 1s linear infinite;
+}
+
+/* Animação do spinner */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
